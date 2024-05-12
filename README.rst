@@ -224,6 +224,25 @@ DNS lookup
 * If the DNS server is on a different subnet, the network library follows
   the ``ARP process`` below for the default gateway IP.
 
+Additional DNS Lookup Process Details
+-------------------------------------
+
+* Following the request to the DNS server, the server checks its local cache for the IP
+  address corresponding to the requested domain name. If the IP address is found in the cache,
+  it is returned to the browser immediately, expediting the resolution process.
+
+* In cases where the IP address is not cached locally by the DNS server, it initiates
+  a recursive process by querying root DNS servers. These root servers direct the DNS server
+  to the authoritative name servers responsible for the specific top-level domain (TLD)
+  of the requested domain name.
+
+* The authoritative name servers provide the IP address associated with the domain name,
+  allowing the DNS server to cache this information for future reference and pass the
+  resolved IP back to the browser.
+
+* Once the browser receives the IP address from the DNS server, it proceeds with establishing
+  the TCP connection to the web server hosting the requested website,
+  initiating the process of loading the webpage content for display in the browser window.
 
 ARP process
 -----------
@@ -519,6 +538,35 @@ to the browser it undergoes the below process:
 * Parsing - HTML, CSS, JS
 * Rendering - Construct DOM Tree → Render Tree → Layout of Render Tree →
   Painting the render tree
+
+Additional Browser Rendering Process
+-------------------------------------
+
+* Parsing HTML, CSS, and JavaScript: Upon receiving the resources from the server,
+  the browser begins parsing the HTML, CSS, and JavaScript files.
+  HTML parsing involves converting the markup into a Document Object Model (DOM) tree,
+  CSS parsing styles the elements in the DOM, and JavaScript parsing executes
+  any scripts that may manipulate the DOM or interact with the page.
+
+* Constructing the DOM Tree: The browser constructs the DOM tree
+  by representing the structure of the HTML document as a tree data structure.
+  Each HTML element becomes a node in the tree
+  with parent-child relationships reflecting the document's layout.
+
+* Creating the Render Tree: After constructing the DOM tree, the browser creates
+  a Render Tree that takes into account the visual aspects of the document.
+  This tree excludes non-visual elements like <head> or hidden elements
+  focusing on what needs to be rendered on the screen.
+
+* Layout of the Render Tree: The browser calculates the layout of the Render Tree
+  by determining the exact position and size of each element on the webpage.
+  This process involves considering factors like CSS styles, element dimensions,
+  and the overall page structure.
+
+* Painting the Render Tree: Once the layout is determined, the browser paints
+  the elements onto the screen based on their calculated positions. This involves
+  rendering pixels on the screen corresponding to the visual representation of the webpage
+  including text, images, borders, backgrounds, and other visual elements.
 
 Browser
 -------
